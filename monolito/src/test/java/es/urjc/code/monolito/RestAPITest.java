@@ -89,6 +89,7 @@ class RestAPITest {
 
 	@Test
 	public void deleteOneBookTest(){
+
 		given().
 				request()
 				.contentType(ContentType.JSON).
@@ -97,6 +98,34 @@ class RestAPITest {
 				then().
 				statusCode(200).
 				body("id",equalTo(5));
+	}
+
+	@Test
+	public void updateOneBookTest(){
+		Book book = bookRepo.findAll().get(0);
+		Long bookId = book.getId();
+		Integer stock = book.getStock();
+		book.setStock(stock -1);
+		given().
+				request()
+				.contentType(ContentType.JSON).
+				body(book).
+				when().
+				put("/book").
+				then().
+				statusCode(201).
+				body("id",equalTo(bookId.intValue())).
+				body("stock",equalTo(stock-1));
+
+		given().
+				request()
+				.contentType(ContentType.JSON).
+				when().
+				get("/book/"+bookId).
+				then().
+				statusCode(200).
+				body("id",equalTo(bookId.intValue())).
+				body("stock",equalTo(stock-1));
 	}
 
 	@Test
@@ -112,7 +141,33 @@ class RestAPITest {
 				statusCode(201).
 				body("name", equalTo("Arnaldo Josueldo"));
 	}
+	@Test
+	public void updateOneUserTest(){
+		User user = userRepo.findAll().get(0);
+		Long userId = user.getId();
+		Integer maxLending = user.getMaxLending();
+		user.setMaxLending(maxLending -1);
+		given().
+				request()
+				.contentType(ContentType.JSON).
+				body(user).
+				when().
+				put("/user").
+				then().
+				statusCode(201).
+				body("id",equalTo(userId.intValue())).
+				body("maxLending",equalTo(maxLending-1));
 
+		given().
+				request()
+				.contentType(ContentType.JSON).
+				when().
+				get("/user/"+userId).
+				then().
+				statusCode(200).
+				body("id",equalTo(userId.intValue())).
+				body("maxLending",equalTo(maxLending-1));
+	}
 	@Test
 	public void readAllUsersTest(){
 		given().
