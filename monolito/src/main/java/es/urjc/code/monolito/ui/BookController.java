@@ -2,6 +2,7 @@ package es.urjc.code.monolito.ui;
 
 import es.urjc.code.monolito.model.Book;
 import es.urjc.code.monolito.model.Lending;
+import es.urjc.code.monolito.model.User;
 import es.urjc.code.monolito.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,6 +51,11 @@ public class BookController {
 		Book bookWithId = bookRepo.save(book);
 		return bookWithId;
 	}
-	
 
+	@PutMapping("/book")
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public Book updateBook(@RequestBody Book book) {
+		Book bookWithId = bookRepo.save(book);
+		return bookWithId;
+	}
 }

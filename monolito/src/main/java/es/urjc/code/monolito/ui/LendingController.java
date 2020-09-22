@@ -28,6 +28,25 @@ public class LendingController {
 	private BookRepository bookRepository;
 	@PostConstruct
 	public void init() {
+
+		Book elQuijote = new Book("El Quijote","Miguel De Cervantes",2);
+		Book losRenglones = new Book("Los Renglones Torcidos de Dios","Ken Follet" ,5);
+		Book laBiblia = new Book("La Biblia","mmm", 5);
+
+		bookRepository.save(elQuijote);
+		bookRepository.save(losRenglones);
+		bookRepository.save(laBiblia);
+
+		User sebas = new User("sebas",2);
+		User maaret = new User("maaret", 5);
+		User josue = new User("josue", 5);
+
+		userRepository.save(sebas);
+		userRepository.save(maaret);
+		userRepository.save(josue);
+
+		Lending lending = new Lending(elQuijote,sebas);
+		lendingRepository.save(lending);
 	}
 	
 	@GetMapping("/lending")

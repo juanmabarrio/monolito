@@ -34,8 +34,13 @@ public class UserController {
 	}
 	
 	@GetMapping("/user/{id}")
-	public User user(@PathVariable long id) {
-		return userRepo.findById(id).get();
+	public ResponseEntity<User> user(@PathVariable long id) {
+		User user = userRepo.findById(id).orElse(null);
+		if (user == null){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(user,HttpStatus.OK);
 	}
 
 
@@ -53,8 +58,16 @@ public class UserController {
 		if (user == null){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-
+		userRepo.deleteById(id);
 		return new ResponseEntity<>(user,HttpStatus.OK);
+	}
+
+
+	 @PutMapping("/user")
+	 @ResponseStatus(code = HttpStatus.CREATED)
+	 public User updateUser(@RequestBody User user) {
+		User userWithId = userRepo.save(user);
+		return userWithId;
 	}
 
 }
