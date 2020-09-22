@@ -44,12 +44,34 @@ public class LendingController {
 
 	@DeleteMapping("/lending/{id}")
 	public ResponseEntity<Lending> deleteLending(@PathVariable long id) {
+		RestTemplate restTemplate = new RestTemplate();
 		Lending lending = lendingRepository.findById(id).orElse(null);
 		if (lending == null){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
+		//increase stock and credit
+		//get user
+		ResponseEntity<UserDTO> userUpdateResponseEntity = restTemplate.getForEntity("http://localhost:8080/user/"+lending.getUserId(), UserDTO.class);
+		UserDTO user = userUpdateResponseEntity.getBody();
+		//we update the user with maxLending+1
+		compensateMaxLending(user);
+
+		//get book
+		ResponseEntity<BookDTO> bookUpdateResponseEntity = restTemplate.getForEntity("http://localhost:8080/book/"+lending.getBookId(), BookDTO.class);
+		BookDTO book = bookUpdateResponseEntity.getBody();
+		//we update the book with stock+1
+		compensateStock(book);
+
 		return new ResponseEntity<>(lending,HttpStatus.OK);
+	}
+
+	private void compensateStock(BookDTO book) {
+		RestTemplate restTemplate = new RestTemplate();
+		book.setStock(book.getStock()+1);
+		;
+		HttpEntity<BookDTO> bookEntity = new HttpEntity<BookDTO>(book);
+		restTemplate.exchange("http://localhost:8080/user/", HttpMethod.PUT, bookEntity, BookDTO.class);
 	}
 
 	@PostMapping("/lending")
