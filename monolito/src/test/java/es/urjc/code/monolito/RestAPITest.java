@@ -90,14 +90,15 @@ class RestAPITest {
 	@Test
 	public void deleteOneBookTest(){
 
+		Long bookId =  bookRepo.findAll().get(0).getId();
 		given().
 				request()
 				.contentType(ContentType.JSON).
 				when().
-				delete("/book/5").
+				delete("/book/"+bookId).
 				then().
 				statusCode(200).
-				body("id",equalTo(5));
+				body("id",equalTo(bookId.intValue()));
 	}
 
 	@Test
