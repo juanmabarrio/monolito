@@ -46,8 +46,17 @@ public class LendingController {
 		if (lending == null){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		lendingRepository.deleteById(id);
+		
+		User user = lending.getUser();
+		user.setMaxLending(lending.getUser().getMaxLending()-1);
+		userRepository.save(user);
 
-		return new ResponseEntity<>(lending,HttpStatus.OK);
+		Book book = lending.getBook();
+		book.setStock(lending.getBook().getStock()+1);
+		bookRepository.save(book);
+
+	return new ResponseEntity<>(lending,HttpStatus.OK);
 	}
 
 	@PostMapping("/lending")
