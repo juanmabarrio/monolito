@@ -3,14 +3,10 @@ services:
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq
+    hostname: myrabbit
     ports:
       - 5672:5672
       - 15672:15672
-    healthcheck:
-          test: [ "CMD", "nc", "-z", "localhost", "5672" ]
-          interval: 5s
-          timeout: 15s
-          retries: 1
   monolito-service:
     image: monolito-service
     container_name: monolito-service
@@ -18,3 +14,14 @@ services:
       - 8080:8080
     depends_on:
       - rabbitmq
+  lending-service:
+    image: lending-service
+    container_name: lending-service
+    ports:
+      - 8081:8081
+  notification-service:
+    image: notification-service
+    container_name: notification-service
+    ports:
+      - 8082:8082
+
