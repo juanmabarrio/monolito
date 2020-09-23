@@ -5,10 +5,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 
-import es.urjc.code.monolito.service.LogNotificationService;
 import es.urjc.code.monolito.service.NotificationService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +48,7 @@ public class UserController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public User newUser(@RequestBody User user) {
 		User userWithId = userRepo.save(user);
-		logger.info("new user created -> " + userWithId );
+		notificationService.sendNotification("new user created -> " + userWithId );
 		return userWithId;
 	}
 
