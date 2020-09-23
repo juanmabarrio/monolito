@@ -17,7 +17,7 @@ public class ExternalNotificationService implements NotificationService {
 
     @Override
     public void sendNotification(String message) {
-        rabbitTemplate.convertAndSend("myQueue", "Hello, world!");
+        rabbitTemplate.convertAndSend("myQueue", message);
 
 
     }
