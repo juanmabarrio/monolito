@@ -1,14 +1,19 @@
 package es.urjc.code.monolito.service;
 
-import es.urjc.code.monolito.ui.UserController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ExternalNotificationService implements NotificationService {
-    Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @Autowired
+    Queue queue;
+
+    RabbitTemplate rabbitTemplate = new RabbitTemplate();
+
 
     @Override
     public void sendNotification(String message) {
-        logger.info("NOTIFICATION SERVICE 2 " +message);
+        rabbitTemplate.convertAndSend("myQueue", "Hello, world!");
     }
 }

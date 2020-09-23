@@ -3,7 +3,6 @@ package es.urjc.code.monolito.service;
 import es.urjc.code.monolito.ui.UserController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 public class LogNotificationService implements NotificationService {
     Logger logger = LoggerFactory.getLogger(UserController.class);

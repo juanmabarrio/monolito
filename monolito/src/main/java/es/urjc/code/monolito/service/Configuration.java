@@ -1,5 +1,6 @@
 package es.urjc.code.monolito.service;
 
+import org.springframework.amqp.core.Queue;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 
@@ -24,5 +25,11 @@ public class Configuration {
     public NotificationService externalNotificationService() {
         return new ExternalNotificationService();
     }
+
+    @Bean
+    public Queue myQueue() {
+        return new Queue("myQueue", false);
+    }
+
 }
 
