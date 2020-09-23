@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>es.urjc.code</groupId>
-	<artifactId>enunciado-practica-arquitectura-1-recuperacion</artifactId>
+	<artifactId>notifications</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>rompiendo el monolito - recuperación</name>
 	<description>rompiendo el monolito - recuperación</description>
