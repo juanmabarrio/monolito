@@ -48,7 +48,7 @@ public class UserController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public User newUser(@RequestBody User user) {
 		User userWithId = userRepo.save(user);
-		notificationService.sendNotification("new user created -> " + userWithId );
+		notificationService.sendNotification("new user created -> " + userWithId.toString() );
 		return userWithId;
 	}
 
