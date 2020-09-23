@@ -1,6 +1,7 @@
 package es.urjc.code.monolito.service;
 
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 
@@ -23,7 +24,7 @@ public class Configuration {
             name = "service",
             havingValue ="external")
     public NotificationService externalNotificationService() {
-        return new ExternalNotificationService();
+        return new ExternalNotificationService(new RabbitTemplate());
     }
 
     @Bean
