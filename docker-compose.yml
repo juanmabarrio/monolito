@@ -1,0 +1,12 @@
+version: '3'
+services:
+  monolito-service:
+    image: monolito-service
+    container_name: monolito-service
+    ports:
+      - 8080:8080
+  lending-service:
+    image: lending-service
+    container_name: lending-service
+    ports:
+      - 8081:8081
